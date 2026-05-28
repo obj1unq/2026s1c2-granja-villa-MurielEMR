@@ -9,6 +9,7 @@ class Mercado{
     }
     method comprarMercaderia(mercaderiaNueva){
             self.agregarMercaderia(mercaderiaNueva)
+            cantidadMonedas = cantidadMonedas - personaje.valorDeCosecha()
     }
     method agregarMercaderia(mercaderiaNueva){
         mercaderia.addAll(mercaderiaNueva)
