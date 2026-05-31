@@ -1,0 +1,44 @@
+import aspersor.*
+import cultivos.*
+import factory.*
+import wollok.game.*
+import mercado.*
+import personaje.*
+
+
+describe "Regadas de plantas"{
+    test "Regada de maiz"{
+        personaje.position(game.at(5,5 ))
+        personaje.sembrar("maiz")
+        const maiz = game.colliders(personaje).findOrDefault({ obj => obj.esCultivo() }, null)
+        assert.equals(0, maiz.valor())
+        personaje.regar()
+        assert.equals(150, maiz.valor())
+        assert.that(maiz.esFormaFinal())
+    }
+    test "regada de trigo"{
+        personaje.position(game.at(5,5 ))
+        personaje.sembrar("trigo")
+        const trigo = game.colliders(personaje).findOrDefault({ obj => obj.esCultivo() }, null)
+        assert.equals(0, trigo.valor())
+        assert.equals(0, trigo.etapa())
+        personaje.regar() //pasa de etapa 0 a 1
+        assert.equals(0, trigo.valor())
+        assert.equals(1, trigo.etapa())
+        assert.notThat(trigo.esFormaFinal())
+        personaje.regar() //pasa de etapa 1 a 2
+        assert.equals(100, trigo.valor())
+        assert.equals(2, trigo.etapa())
+        assert.that(trigo.esFormaFinal())
+    }
+
+    test "regada de tomaco"{
+        personaje.position(game.at(5,5 ))
+        personaje.sembrar("tomaco")
+        const tomaco = game.colliders(personaje).findOrDefault({ obj => obj.esCultivo() }, null)
+        assert.equals(80, tomaco.valor())  //verificacion de que existe el tomaco
+        assert.equals(game.at(5, 5), tomaco.position())
+        personaje.regar() //deberia pasar a la casilla de arriba.
+        assert.equals(game.at(5, 6), tomaco.position())
+    }
+}
