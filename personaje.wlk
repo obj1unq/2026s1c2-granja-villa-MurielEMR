@@ -6,7 +6,7 @@ import mercado.*
 object personaje {
 	var property position = game.center()
 	const property image = "fplayer.png"
-	const cosecha = []
+	const property cosecha = []
 	var property oroActual = 0
 
 	method sembrar(tipoDeSemilla){
@@ -18,14 +18,15 @@ object personaje {
 			self.error("Imposible, hay otra cosa en este lugar")
 		}
 	}
-	method regar(){
-		var planta = null 
-		if(not game.colliders(self).isEmpty()){
-			planta = game.uniqueCollider(self)
-			planta.regada()
-		}
-		else("Estas regando piso xd")
-	}
+	method regar() {
+    const objetosAbajo = game.colliders(self)
+    const planta = objetosAbajo.findOrDefault({ obj => obj.esCultivo() }, null)
+    if (planta != null) {
+        planta.regada()
+    } else {
+        game.say(self, "No se le puede regar a la nada")
+    }
+}
 	method cosechar(){
 		self.validarCosecha()
 		var planta = game.uniqueCollider(self)

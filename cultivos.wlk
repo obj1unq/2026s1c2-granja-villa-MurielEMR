@@ -7,6 +7,9 @@ class Maiz {
 	method image() {
 		return estadoMaiz.image()
 	}
+	method valor() {
+        return estadoMaiz.valor()
+	}
 	method regada(){
 		if (estadoMaiz == maizBebe){
 			estadoMaiz = maizAdulto
@@ -47,82 +50,30 @@ object maizAdulto{
 }
 class Trigo{
 	const property position
-	var property estadoTrigo = trigo0
-	method image(){
-		return estadoTrigo.image()
-	}
-	method regada(){
-		estadoTrigo = estadoTrigo.siguiente()
-	}
-	method esFormaFinal(){
-		return estadoTrigo.esFormaFinal()
-	}
-	method valor(){
-		estadoTrigo.valor()
-	}
-	method esCultivo(){
-		return true
-	}
-	method esMercado(){
-        return false
+    var property etapa = 0
+    method image() {
+        return "wheat_" + etapa.toString() + ".png"
     }
+    method regada() {
+        if (etapa < 3) {
+            etapa = etapa + 1
+        } else {
+            etapa = 0
+        }
+    }
+    method esFormaFinal() {
+        return etapa >= 2
+    }
+    method valor() {
+        return if (etapa == 2) 100 
+               else if (etapa == 3) 200 
+               else 0
+    }
+
+    method esCultivo() = true
+    method esMercado() = false
 }
-object trigo0{
-	method image(){
-		return "wheat_0.png"
-	}
-	method siguiente(){
-		return trigo1
-	}
-	method esFormaFinal(){
-		return false
-	}
-	method valor(){
-		return 0
-	}
-}
-object trigo1{
-	method image(){
-		return "wheat_1.png"
-	}
-	method siguiente(){
-		return trigo2
-	}
-	method esFormaFinal(){
-		return false
-	}
-	method valor(){
-		return 0
-	}
-}
-object trigo2{
-	method image(){
-		return "wheat_2.png"
-	}
-	method siguiente(){
-		return trigo3
-	}
-	method esFormaFinal(){
-		return true
-	}
-	method valor(){
-		return 100
-	}
-}
-object trigo3{
-	method image(){
-		return "wheat_3.png"
-	}
-	method siguiente(){
-		return trigo0 
-	}
-	method esFormaFinal(){
-		return true
-	}
-	method venta(){
-		return 200
-	}
-}
+
 class Tomaco{
 	var property position
 	method image(){

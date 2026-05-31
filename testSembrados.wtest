@@ -1,0 +1,33 @@
+import aspersor.*
+import cultivos.*
+import factory.*
+import wollok.game.*
+import mercado.*
+import personaje.*
+
+describe "Sembrar"{
+    method initialize() {
+            
+   }
+    test "Sembrar maiz en el lugar del personaje"{
+        personaje.position(game.at(5,5 ))
+        personaje.sembrar("maiz")
+        const plantaSembrada = game.colliders(personaje).findOrDefault({ obj => obj.esCultivo() }, null)
+        assert.equals(personaje.position(), plantaSembrada.position())
+        assert.equals("corn_baby.png", plantaSembrada.image())
+    }
+    test "Sembrar tomaco en el lugar del personaje"{
+        personaje.position(game.at(5,5 ))
+        personaje.sembrar("tomaco")
+        const plantaSembrada = game.colliders(personaje).findOrDefault({ obj => obj.esCultivo() }, null)
+        assert.equals(personaje.position(), plantaSembrada.position())
+        assert.equals("tomaco.png", plantaSembrada.image())
+    }
+    test "Sembrar trigo en el lugar del personaje"{
+        personaje.position(game.at(5,5 ))
+        personaje.sembrar("trigo")
+        const plantaSembrada = game.colliders(personaje).findOrDefault({ obj => obj.esCultivo() }, null)
+        assert.equals(personaje.position(), plantaSembrada.position())
+        assert.equals("wheat_0.png", plantaSembrada.image())
+    }
+}

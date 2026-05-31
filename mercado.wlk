@@ -14,11 +14,16 @@ class Mercado{
     method agregarMercaderia(mercaderiaNueva){
         mercaderia.addAll(mercaderiaNueva)
     }
-    method puedeComprarMercaderia(mercaderiaNueva){
-        return self.cantidadMonedas() >= personaje.valorDeCosecha()
+    
+    method puedeComprarMercaderia(mercaderiaNueva) {
+        const valorDeEstaVenta = mercaderiaNueva.sum({ planta => planta.valor() })
+        return self.cantidadMonedas() >= valorDeEstaVenta
     }
 
     method esMercado(){
         return true
+    }
+    method esCultivo(){
+        return false
     }
 }
